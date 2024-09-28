@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background-image {
+            background-image: url('https://wallpapercave.com/wp/wp1846068.jpg'); /* Imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* Ocupa 100% da altura da viewport */
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Sobreposição escura */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Centraliza horizontalmente */
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Limite de largura */
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ccc;
+        }
+        .submit-btn {
+            background-color: #02740c; /* Verde para o botão de login */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Ocupa 100% da largura */
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .register-link {
+            color: #02740c;
+            text-decoration: underline;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="background-image relative">
+    <div class="overlay"></div> <!-- Sobreposição escura -->
+
+    <div class="content">
+        <div class="form-container">
+            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Login - Hotel</h1>
+            <form id="loginForm">
+                <label for="email" class="block text-lg mb-2 text-gray-800">Email:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+
+                <label for="senha" class="block text-lg mb-2 text-gray-800">Senha:</label>
+                <input type="password" id="senha" name="senha" class="form-input" required>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <p class="register-link">
+                Não tem uma conta? <a href="/hotel/register" class="text-green-600 underline">Registre-se aqui</a>
+            </p>
+            <p class="register-link">
+                <a href="/" class="text-green-600 underline">Voltar para a página inicial</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Lidar com o envio do formulário
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evitar o envio padrão do formulário
+
+            // Pegar os valores do formulário
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            // Chamada ao login
+            const response = await fetch('/hotel/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, senha }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Login bem-sucedido!');
+
+                // Salvar token no localStorage
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('email', email);
+
+                // Chamada para obter dados do hotel (incluindo CNPJ)
+                const hotelResponse = await fetch('/hotel/details', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`, // Usando o token recebido
+                    },
+                });
+
+                const hotelData = await hotelResponse.json();
+                if (hotelResponse.ok) {
+                    // Salvar CNPJ no localStorage
+                    localStorage.setItem('cnpj', hotelData.cnpj);
+                    console.log('CNPJ salvo no localStorage:', hotelData.cnpj);
+                    
+                    // Redirecionar para a página desejada
+                    window.location.href = '/hotel/update'; // Altere para a página que deseja redirecionar
+                } else {
+                    console.error('Erro ao obter detalhes do hotel:', hotelData.message);
+                    
+                }
+            }
+             else {
+                console.error(data.message);
+                alert('Erro ao fazer login: ' + data.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update de Site de Reserva</title>
+</head>
+<body>
+    <h1>Update de Site de Reserva</h1>
+    <form id="registroForm">
+        <br><br>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <br><br>
+        
+        <label for="nomeSite">Nome do Site:</label>
+        <input type="text" id="nomeSite" name="nomeSite" required>
+        <br><br>
+        
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" required>
+        <br><br>
+        
+        <label for="urlSite">URL do Site:</label>
+        <input type="text" id="urlSite" name="urlSite" required>
+        <br><br>
+        
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            // Pega os valores do formulário
+            const senha = document.getElementById('senha').value;
+            const nomeSite = document.getElementById('nomeSite').value;
+            const telefone = document.getElementById('telefone').value;
+            const urlSite = document.getElementById('urlSite').value;
+
+            // Pega o token e o email armazenados no localStorage
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+
+            if (!token || !email) {
+                alert('Faça login para atualizar suas credenciais.');
+                console.error('Usuário não está logado');
+                return;
+            }
+
+            // Faz a requisição para o servidor com os dados e o token no cabeçalho
+            const response = await fetch('/siteReserva/update', {
+                method: 'PUT', // Ou 'PUT', dependendo da sua necessidade
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Envia o token JWT
+                },
+                body: JSON.stringify({
+                    senha,
+                    nomeSite,
+                    telefone,
+                    urlSite
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Site de reserva atualizado com sucesso!');
+                // Redirecionar ou mostrar uma mensagem de sucesso
+            } else {
+                console.error('Erro ao atualizar site de reserva:', data.message);
+            }
+        });
+    </script>
+</body>
+</html>

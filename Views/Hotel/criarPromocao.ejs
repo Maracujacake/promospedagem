@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Promoção</title>
+    <style>
+        /* Estilos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Criar Promoção</h2>
+        <form id="promocao-form">
+            <label for="preco">Preço:</label>
+            <input type="text" id="preco" name="preco" placeholder="Informe o preço da promoção" required>
+
+            <label for="data_inicio">Data de Início:</label>
+            <input type="date" id="data_inicio" name="data_inicio" required>
+
+            <label for="data_fim">Data de Fim:</label>
+            <input type="date" id="data_fim" name="data_fim" required>
+
+            <label for="url_site">Site de Reserva:</label>
+            <select id="url_site" name="url_site" required>
+                <option value="">Selecione um site de reserva</option>
+                <% sitesReserva.forEach(function(site) { %>
+                    <option value="<%= site.dataValues.urlSite %>"><%= site.dataValues.nomeSite %></option>
+                <% }); %>
+             </select>
+
+            <input type="submit" value="Criar Promoção">
+        </form>
+    </div>
+
+    <script>
+        // Pega o formulário
+        const form = document.getElementById('promocao-form');
+
+        // Captura o envio do formulário
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Evita o envio padrão
+
+            const token = localStorage.getItem('token'); // Pega o token armazenado
+
+            if (!token) {
+                alert('Você precisa estar logado para criar uma promoção!');
+                return;
+            }
+
+            // Pega os dados do formulário
+            const formData = new FormData(form);
+            const data = {
+                preco: formData.get('preco'),
+                data_inicio: formData.get('data_inicio'),
+                data_fim: formData.get('data_fim'),
+                url_site: formData.get('url_site')
+            };
+
+            try {
+                // Faz a requisição com o token no cabeçalho
+                const response = await fetch('/hotel/criarPromocao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Adiciona o token no cabeçalho
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Promoção criada com sucesso!');
+                    console.log(result);
+                } else {
+                    alert('Erro ao criar promoção: ' + result.message);
+                    console.log(result);
+                }
+            } catch (err) {
+                console.error('Erro ao enviar formulário', err);
+            }
+        });
+    </script>
+</body>
+</html>

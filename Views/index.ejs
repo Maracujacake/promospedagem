@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background-image {
+            background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2t5c2NyYXBlcnxlbnwwfHwwfHx8MA%3D%3D'); /* Imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* Ocupa 100% da altura da viewport */
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Sobreposição escura com 60% de opacidade */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh; /* Faz com que o conteúdo ocupe 100% da altura */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza o conteúdo verticalmente */
+        }
+        .hotel-login {
+            background-color: #063210; /* Verde para hotéis */
+        }
+        .site-login {
+            background-color: #02740c; /* Verde mais claro para sites de reserva */
+        }
+        .hotel-login:hover {
+            background-color: #218838;
+        }
+        .site-login:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="background-image relative">
+        <div class="overlay"></div> <!-- Sobreposição escura -->
+        <nav class="bg-white shadow-md p-4 relative z-10">
+            <div class="container mx-auto flex justify-end">
+                <a href="/admin-login" class="text-green-500 hover:underline">Admin? Entre aqui</a>
+            </div>
+        </nav>
+
+        <div class="container mx-auto p-6 content">
+            <h1 class="text-5xl font-bold mb-6 text-center text-white"><%= message %></h1>
+            <p class="text-2xl text-center mb-8 text-white">
+                Aproveite nossas promoções e descubra novas oportunidades de hospedagem!
+            </p>
+            <p class="text-xl text-center mb-8 text-white">
+                Nosso sistema conecta hotéis e sites de reservas para proporcionar as melhores ofertas e comodidades aos seus clientes.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                <div class="flex flex-col items-center">
+                    <a href="/hotel/login" class="hotel-login text-white px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 text-center">
+                        Sou um hotel, quero acessar o sistema!
+                    </a>
+                    <p class="mt-4 text-white text-lg text-center">
+                        Gerencie suas promoções, mantenha seu hotel visível para milhares de usuários e aproveite ao máximo nossa plataforma.
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <a href="/siteReserva/login" class="site-login text-white px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 text-center">
+                        Sou um site de reserva, quero acessar o sistema!
+                    </a>
+                    <p class="mt-4 text-white text-lg text-center">
+                        Conecte-se com diversos hotéis, ofereça promoções exclusivas e expanda suas oportunidades de reserva.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center text-white">
+                <p class="text-xl">
+                    Nosso sistema foi desenvolvido para facilitar a comunicação entre hotéis e sites de reservas, trazendo mais eficiência e melhores ofertas para o mercado de hospedagem.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update de Site de Reserva</title>
+</head>
+<body>
+    <h1>Update de Site de Reserva</h1>
+    <form id="registroForm">
+        <br><br>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br><br>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+        
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" required>
+        <br><br>
+        
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            // Pega os valores do formulário
+            const senha = document.getElementById('senha').value;
+            const email = document.getElementById('email').value;
+            const cidade = document.getElementById('cidade').value;
+            const nome = document.getElementById('nome').value;
+
+            // Pega o token e o email armazenados no localStorage
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert('Faça login para atualizar suas credenciais.');
+                console.error('Usuário não está logado');
+                return;
+            }
+
+            // Faz a requisição para o servidor com os dados e o token no cabeçalho
+            const response = await fetch('/hotel/update', {
+                method: 'PUT', // Ou 'PUT', dependendo da sua necessidade
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Envia o token JWT
+                },
+                body: JSON.stringify({
+                    email,
+                    senha,
+                    nome,
+                    cidade
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Hotel atualizado com sucesso!');
+                // Redirecionar ou mostrar uma mensagem de sucesso
+            } else {
+                console.error('Erro ao atualizar Hotel:', data.message);
+            }
+        });
+    </script>
+</body>
+</html>
