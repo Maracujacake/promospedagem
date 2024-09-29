@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize'); 
 const hotel = require('../Models/Hotel');
 const promocaoController = require('./PromocaoController');
 
@@ -127,6 +128,45 @@ const getHotelByEmail = async(req, res) => {
     }
 }
 
+
+// Leitura de todos os hoteis
+const getHoteis = async (req, res) => {
+    try {
+        // Busca todos os hotéis
+        const hoteis = await hotel.findAll();
+
+        // Renderiza a página ejs passando os hotéis como dados
+        res.render('todosHoteis', { hoteis });
+    } catch (error) {
+        console.log('Erro ao buscar hotéis', error);
+        res.status(500).json({ message: 'Erro ao buscar hotéis', error });
+    }
+};
+
+//Leitura de todos os hoteis por cidade
+const getHoteisByCidade = async (req, res) => {
+    const { cidade } = req.params;
+
+    try {
+        // Busca hotéis pela cidade informada
+        const hoteis = await hotel.findAll({
+            where: {
+                cidade:{
+                    [Op.like]: `%${cidade}%`
+                }
+            } 
+        });
+
+        // Renderiza a página ejs passando os hotéis como dados
+        res.render('todosHoteis', { hoteis });
+    } catch (error) {
+        console.log('Erro ao buscar hotéis', error);
+        res.status(500).json({ message: 'Erro ao buscar hotéis na cidade', error });
+    }
+};
+
+
+// Criar promocao
 const criarPromocao = async(req, res) => {
     const token = req.headers.authorization?.split(' ')[1]; // Pega o token do cabeçalho
     if (!token) {
@@ -148,5 +188,7 @@ module.exports = {
     loginHotel,
     updateHotel,
     getHotelByEmail,
-    criarPromocao
+    criarPromocao,
+    getHoteis,
+    getHoteisByCidade
 };

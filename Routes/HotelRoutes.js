@@ -41,9 +41,21 @@ router.get('/details', async(req, res) => {
 // CRIAÇÃO de promoção
 router.get('/criarPromocao', siteReservaController.renderizarFormularioPromocao);
 router.post('/criarPromocao', hotelController.criarPromocao);
-module.exports = router;
+
 
 
 router.get('/opcoes', (req, res) => {
     res.render('Hotel/opcoesHotel', { user: req.user });
 });
+
+// Listagem de todos os hotéis
+router.get('/hoteis', hotelController.getHoteis);  // Listagem de todos os hotéis
+
+// Rota para renderizar a página de busca por cidade
+router.get('/buscar-cidade', (req, res) => {
+    res.render('hotelByCidade', { title: 'Buscar Hotel por Cidade' });
+});
+router.get('/hoteis/cidade/:cidade', hotelController.getHoteisByCidade);  // Listagem de hotéis por cidade
+
+
+module.exports = router;
