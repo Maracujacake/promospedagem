@@ -32,17 +32,17 @@
                     </a>
 
                     <!-- Deletar o siteReserva -->
-                    <form action="/siteReserva/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar seu site de reserva?');" class="w-full">
-                        <button type="submit" class="bg-red-500 text-white w-full py-3 rounded-md hover:bg-red-600 text-center">
-                            Deletar siteReserva
-                        </button>
-                    </form>
+                    <button id="deleteBtn" class="bg-red-500 text-white w-full py-3 rounded-md hover:bg-red-600 text-center">
+                        Deletar siteReserva
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+
+        // Verifica se o usuário está autenticado
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             console.log(token);
@@ -61,6 +61,8 @@
             });
         });
 
+
+        // Realizar logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
             // Remover o token do localStorage
             localStorage.removeItem('token');
@@ -71,6 +73,45 @@
             
             // Redirecionar para a página de login
             window.location.href = '/siteReserva/login'; // Ajuste o caminho conforme necessário
+        });
+
+
+        // Deletar o siteReserva
+        document.getElementById('deleteBtn').addEventListener('click', async () => {
+            const token = localStorage.getItem('token'); // Token armazenado no localStorage
+
+            if (!token || localStorage.getItem('userType') !== 'siteReserva') {
+                alert('Você não está autenticado. Redirecionando para a página de login.');
+                window.location.href = '/siteReserva/login'; // Redireciona para a página de login
+                return;
+            }
+
+            const confirmed = confirm('Tem certeza que deseja deletar seu site de reserva?');
+            if (!confirmed) return;
+
+            try {
+            const response = await fetch('/siteReserva/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Envia o token no cabeçalho
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+                // Redirecionar ou tomar outra ação após a deleção
+                localStorage.clear();
+                window.location.href = '/'; // Exemplo de redirecionamento
+            } else {
+                alert(`Erro: ${result.message}`);
+            }
+            } catch (error) {
+                console.error('Erro ao tentar deletar o site de reserva:', error);
+                alert('Ocorreu um erro ao tentar deletar o site de reserva.');
+            }
         });
     </script>
 </body>

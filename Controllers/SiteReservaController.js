@@ -155,6 +155,29 @@ const getPromocoesBySiteReserva = async (req, res) => {
     }
 };
 
+// Deleta um site de reserva
+const deletarSiteReserva = async (req, res) => {
+    const email = req.user.email; // Email extraído do token JWT
+    console.log(email);
+
+    try {
+        // Busca o site de reserva pelo email
+        const SiteReserva = await siteReserva.findOne({ where: { email } });
+
+        if (!SiteReserva) {
+            return res.status(404).json({ message: 'Site de reserva não encontrado.' });
+        }
+
+        // Deleta o site de reserva
+        await SiteReserva.destroy();
+
+        return res.status(200).json({ message: 'Site de reserva deletado com sucesso.' });
+    } catch (error) {
+        console.error('Erro ao deletar site de reserva:', error);
+        return res.status(500).json({ message: 'Erro ao deletar site de reserva.' });
+    }
+};
+
 
 module.exports = {
     registroSiteReserva,
@@ -162,5 +185,6 @@ module.exports = {
     atualizarSiteReserva,
     getSitesReservas,
     renderizarFormularioPromocao,
-    getPromocoesBySiteReserva
+    getPromocoesBySiteReserva,
+    deletarSiteReserva
 }

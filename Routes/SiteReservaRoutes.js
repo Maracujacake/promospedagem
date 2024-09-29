@@ -58,4 +58,8 @@ router.get('/opcoes', (req, res) => {
 router.get('/:email/promocoes', siteReservaController.getPromocoesBySiteReserva);
 
 
+// Deletar site de reserva
+router.delete('/delete', authenticateJWT, siteReservaController.deletarSiteReserva);
+
+
 module.exports = router;

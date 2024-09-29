@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 
 // isso aqui espera o token como parte do cabeçalho, blz?
 const authMiddleware = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
     if (!token) {
-        return res.status(403).json({ message: 'Token não fornecido' });
+        return res.status(403).json({ message: 'Autenticação necessária. Token não fornecido.' });
     }
 
     jwt.verify(token, 'secret', (err, usr) => {
