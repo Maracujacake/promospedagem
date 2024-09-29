@@ -23,7 +23,7 @@ app.use('/siteReserva', require('./Routes/SiteReservaRoutes'));
 app.use('/hotel', require('./Routes/HotelRoutes'));
 
 require('./Models/Associations');
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
     console.log('Banco de dados sincronizado');
 });
 

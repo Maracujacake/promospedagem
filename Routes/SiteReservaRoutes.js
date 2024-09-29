@@ -12,10 +12,15 @@ router.get('/register', (req, res) => {
     res.render('siteReserva/registroSiteReserva', {title: 'Registro de Site de Reserva'});
 });
 
-router.post('/register', async(req, res) => {
-    siteReservaController.registroSiteReserva(req, res);
+router.post('/register', async (req, res) => {
+    const resultado = await siteReservaController.registroSiteReserva(req, res);
+    
+    if (resultado.status === 201) {
+        return res.redirect('/siteReserva/login'); // Redirecionar se o registro foi bem-sucedido
+    } else {
+        return res.status(resultado.status).json({ message: resultado.message }); // Retornar a mensagem de erro
+    }
 });
-
 
 
 // login de sites de reserva
@@ -41,6 +46,12 @@ router.put('/update', authenticateJWT, siteReservaController.atualizarSiteReserv
 
 // leitura de sites de reserva
 router.get('/readSites', siteReservaController.getSitesReservas);
+
+
+// renderização da página de opções
+router.get('/opcoes', (req, res) => {
+    res.render('siteReserva/opcoesSiteReserva', { user: req.user });
+});
 
 
 module.exports = router;

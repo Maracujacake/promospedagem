@@ -21,8 +21,12 @@ const loginSiteReserva = async (req, res) => {
         if(!senhaValida){
             return res.status(401).json({ message: 'Senha inválida' });
         }
+        payload = {
+            email: site.email,
+            userType: 'siteReserva'
+        }
 
-        const token = jwt.sign({email: site.email}, 'secret', {expiresIn: '1h'});
+        const token = jwt.sign(payload, 'secret', {expiresIn: '1h'});
         res.json({
             message: 'Login bem sucedido',
             token
@@ -50,11 +54,11 @@ const registroSiteReserva = async (req, res) => {
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 
         const site = await siteReserva.create({email, senha: senhaCriptografada, nomeSite, telefone, urlSite});
-        res.json(site);
+        return { status: 201, site };
     }
     catch(error){
         console.log(error);
-        return res.status(500).json({ message: 'Erro ao realizar cadastro' });
+        return { status: 500, message: 'Erro ao realizar cadastro' };
     }
 }
 

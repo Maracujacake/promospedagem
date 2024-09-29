@@ -3,31 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update de Site de Reserva</title>
+    <title>Update de Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background-image {
+            background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2t5c2NyYXBlcnxlbnwwfHwwfHx8MA%3D%3D'); /* Imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* Ocupa 100% da altura da viewport */
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Sobreposição escura */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            border-color: #02740c;
+            outline: none;
+        }
+        .submit-btn {
+            background-color: #02740c; /* Verde para o botão de atualizar */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
-<body>
-    <h1>Update de Site de Reserva</h1>
-    <form id="registroForm">
-        <br><br>
+<body class="background-image relative">
+    <div class="overlay"></div> <!-- Sobreposição escura -->
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <br><br>
-        
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-        <br><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
-        
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade" required>
-        <br><br>
-        
-        <button type="submit">Registrar</button>
-    </form>
+    <div class="content">
+        <div class="form-container">
+            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Update de Hotel</h1>
+            <form id="registroForm">
+                <label for="nome" class="block text-lg mb-2 text-gray-800">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-input" required>
+
+                <label for="senha" class="block text-lg mb-2 text-gray-800">Senha:</label>
+                <input type="password" id="senha" name="senha" class="form-input" required>
+
+                <label for="email" class="block text-lg mb-2 text-gray-800">Email:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+
+                <label for="cidade" class="block text-lg mb-2 text-gray-800">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" class="form-input" required>
+
+                <button type="submit" class="submit-btn mt-4">Registrar</button>
+            </form>
+            <p class="mt-4 text-center">
+                <a href="/opcoes" class="text-gray-500">Voltar para a página de opções</a>
+            </p>
+        </div>
+    </div>
 
     <script>
         document.getElementById('registroForm').addEventListener('submit', async (event) => {
@@ -66,10 +129,9 @@
             const data = await response.json();
 
             if (response.ok) {
-                console.log('Hotel atualizado com sucesso!');
-                // Redirecionar ou mostrar uma mensagem de sucesso
+                alert('Hotel atualizado com sucesso!');
             } else {
-                console.error('Erro ao atualizar Hotel:', data.message);
+                alert(`Erro ao atualizar hotel: ${data.message}`);
             }
         });
     </script>

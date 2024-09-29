@@ -4,42 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update de Site de Reserva</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background-image {
+            background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2t5c2NyYXBlcnxlbnwwfHwwfHx8MA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            border-color: #02740c;
+            outline: none;
+        }
+        .submit-btn {
+            background-color: #02740c;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .login-link {
+            color: #02740c;
+            text-decoration: underline;
+        }
+        .alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-left: 5px solid #f5c6cb;
+            border-radius: 0.25rem;
+            z-index: 999;
+        }
+        .alert.active {
+            display: block;
+        }
+    </style>
 </head>
-<body>
-    <h1>Update de Site de Reserva</h1>
-    <form id="registroForm">
-        <br><br>
+<body class="background-image relative">
+    <div class="overlay"></div> <!-- Sobreposição escura -->
+
+    <div class="content">
+        <div class="form-container">
+            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Update de Site de Reserva</h1>
+            <form id="registroForm">
+                <label for="senha" class="block text-lg mb-2 text-gray-800">Senha:</label>
+                <input type="password" id="senha" name="senha" class="form-input" required>
+
+                <label for="nomeSite" class="block text-lg mb-2 text-gray-800">Nome do Site:</label>
+                <input type="text" id="nomeSite" name="nomeSite" class="form-input" required>
+
+                <label for="telefone" class="block text-lg mb-2 text-gray-800">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" class="form-input" required>
+
+                <label for="urlSite" class="block text-lg mb-2 text-gray-800">URL do Site:</label>
+                <input type="text" id="urlSite" name="urlSite" class="form-input" required>
+
+                <button type="submit" class="submit-btn mt-4">Atualizar</button>
+            </form>
+            <p class="mt-4 text-center">
+                <a href="opcoes" class="text-gray-500">Voltar para a página de opções</a>
+            </p>
+        </div>
         
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-        <br><br>
-        
-        <label for="nomeSite">Nome do Site:</label>
-        <input type="text" id="nomeSite" name="nomeSite" required>
-        <br><br>
-        
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" required>
-        <br><br>
-        
-        <label for="urlSite">URL do Site:</label>
-        <input type="text" id="urlSite" name="urlSite" required>
-        <br><br>
-        
-        <button type="submit">Registrar</button>
-    </form>
+    </div>
+
+    <!-- Alerta de erro -->
+    <div id="errorAlert" class="alert">
+        Erro ao atualizar o site de reserva.
+    </div>
 
     <script>
         document.getElementById('registroForm').addEventListener('submit', async (event) => {
             event.preventDefault(); // Evita o envio padrão do formulário
 
-            // Pega os valores do formulário
             const senha = document.getElementById('senha').value;
             const nomeSite = document.getElementById('nomeSite').value;
             const telefone = document.getElementById('telefone').value;
             const urlSite = document.getElementById('urlSite').value;
 
-            // Pega o token e o email armazenados no localStorage
             const token = localStorage.getItem('token');
             const email = localStorage.getItem('email');
 
@@ -49,30 +135,46 @@
                 return;
             }
 
-            // Faz a requisição para o servidor com os dados e o token no cabeçalho
-            const response = await fetch('/siteReserva/update', {
-                method: 'PUT', // Ou 'PUT', dependendo da sua necessidade
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // Envia o token JWT
-                },
-                body: JSON.stringify({
-                    senha,
-                    nomeSite,
-                    telefone,
-                    urlSite
-                }),
-            });
+            try {
+                const response = await fetch('/siteReserva/update', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Envia o token JWT
+                    },
+                    body: JSON.stringify({
+                        senha,
+                        nomeSite,
+                        telefone,
+                        urlSite
+                    }),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (response.ok) {
-                console.log('Site de reserva atualizado com sucesso!');
-                // Redirecionar ou mostrar uma mensagem de sucesso
-            } else {
-                console.error('Erro ao atualizar site de reserva:', data.message);
+                if (response.ok) {
+                    console.log('Site de reserva atualizado com sucesso!');
+                    alert('Site de reserva atualizado com sucesso!');
+                    // Exibir mensagem de sucesso ou redirecionar
+                } else {
+                    showErrorAlert(data.message); // Chama a função para mostrar o alerta
+                }
+            } catch (error) {
+                showErrorAlert('Erro de rede ou servidor.'); // Mensagem genérica em caso de falha na rede
+                console.error('Erro ao atualizar site de reserva:', error);
             }
         });
+
+        // Função para exibir o alerta de erro
+        function showErrorAlert(message) {
+            const alertElement = document.getElementById('errorAlert');
+            alertElement.textContent = `Erro ao atualizar site de reserva: ${message}`; // Atualiza o texto do alerta
+            alertElement.classList.add('active'); // Torna o alerta visível
+
+            setTimeout(() => {
+                alertElement.classList.remove('active'); // Esconde o alerta após 5 segundos
+            }, 5000);
+        }
     </script>
 </body>
 </html>

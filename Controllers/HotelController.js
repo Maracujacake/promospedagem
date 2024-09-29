@@ -4,25 +4,27 @@ const hotel = require('../Models/Hotel');
 const promocaoController = require('./PromocaoController');
 
 // Registro de Hotel
-const registroHotel = async(req, res) => {
+const registroHotel = async (req, res) => {
     console.log(req.body);
-    const {email, senha, nome, cnpj, cidade} = req.body;
+    const { email, senha, nome, cnpj, cidade } = req.body;
 
-    try{
-        const cnpjExistente = await hotel.findOne({where: {cnpj}});
-        const emailExistente = await hotel.findOne({where: {email}});
-        if(cnpjExistente || emailExistente){
-            return res.status(409).json({message: 'CNPJ ou Email já estão em uso'});
+    try {
+        const cnpjExistente = await hotel.findOne({ where: { cnpj } });
+        const emailExistente = await hotel.findOne({ where: { email } });
+        if (cnpjExistente || emailExistente) {
+            // Retorna um erro se CNPJ ou email já estiverem em uso
+            return res.status(409).json({ message: 'CNPJ ou Email já estão em uso' });
         }
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-        const Hotel = await hotel.create({email, senha: senhaCriptografada, nome, cnpj, cidade});
-        res.json(Hotel);
-    }
-    catch(err){
+        const novoHotel = await hotel.create({ email, senha: senhaCriptografada, nome, cnpj, cidade });
+
+        // Redireciona para a página de login após o registro bem-sucedido
+        return res.redirect('/hotel/login'); // Altere o caminho conforme necessário
+    } catch (err) {
         console.log(err);
-        return res.status(500).json({message: 'Erro ao realizar cadastro', err});
+        return res.status(500).json({ message: 'Erro ao realizar cadastro', err });
     }
 }
 
@@ -42,7 +44,8 @@ const loginHotel = async(req, res) => {
         }
         const payload = {
             email: Hotel.email,
-            cnpj: Hotel.cnpj
+            cnpj: Hotel.cnpj,
+            userType: 'hotel'
         }
         const token = jwt.sign(payload, 'secret', {expiresIn: '1h'});
 

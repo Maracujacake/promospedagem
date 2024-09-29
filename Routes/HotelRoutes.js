@@ -42,3 +42,8 @@ router.get('/details', async(req, res) => {
 router.get('/criarPromocao', siteReservaController.renderizarFormularioPromocao);
 router.post('/criarPromocao', hotelController.criarPromocao);
 module.exports = router;
+
+
+router.get('/opcoes', (req, res) => {
+    res.render('Hotel/opcoesHotel', { user: req.user });
+});

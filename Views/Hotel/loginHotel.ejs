@@ -91,6 +91,12 @@
     </div>
 
     <script>
+
+        if (localStorage.getItem('token') && localStorage.getItem('userType') === 'hotel') {
+            // Redirecionar para a página de opções se o token existir
+            window.location.href = '/hotel/opcoes';
+        }
+
         // Lidar com o envio do formulário
         document.getElementById('loginForm').addEventListener('submit', async (event) => {
             event.preventDefault(); // Evitar o envio padrão do formulário
@@ -115,6 +121,7 @@
                 // Salvar token no localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('email', email);
+                localStorage.setItem('userType', 'hotel');
 
                 // Chamada para obter dados do hotel (incluindo CNPJ)
                 const hotelResponse = await fetch('/hotel/details', {
@@ -131,7 +138,7 @@
                     console.log('CNPJ salvo no localStorage:', hotelData.cnpj);
                     
                     // Redirecionar para a página desejada
-                    window.location.href = '/hotel/update'; // Altere para a página que deseja redirecionar
+                    window.location.href = '/hotel/opcoes'; // Altere para a página que deseja redirecionar
                 } else {
                     console.error('Erro ao obter detalhes do hotel:', hotelData.message);
                     
