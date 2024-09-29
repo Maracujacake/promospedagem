@@ -1,0 +1,50 @@
+<!-- views/promocoes.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções do Site de Reserva</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-12">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Promoções do Site de Reserva</h1>
+        <div class="flex flex-col space-y-4">
+            <% if (promocoes.length === 0) { %>
+                <p class="text-center text-red-500">Nenhuma promoção encontrada.</p>
+            <% } else { %>
+                <% promocoes.forEach(promo => { %>
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <h2 class="text-xl font-semibold">Promoção ID: <%= promo.id_promocao %></h2>
+                        <p><strong>Preço:</strong> R$ <%= promo.preco.toFixed(2) %></p>
+                        <p><strong>Data de Início:</strong> <%= new Date(promo.data_inicio).toLocaleDateString('pt-BR') %></p>
+                        <p><strong>Data de Fim:</strong> <%= new Date(promo.data_fim).toLocaleDateString('pt-BR') %></p>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+        <a href="/siteReserva/opcoes" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voltar</a>
+    </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const token = localStorage.getItem('token');
+        console.log(token);
+
+        if (!token || localStorage.getItem('userType') !== 'siteReserva') {
+            alert('Você não está autenticado. Redirecionando para a página de login.');
+            window.location.href = '/siteReserva/login'; // Redireciona para a página de login
+            return;
+        }
+
+        const email = localStorage.getItem('email'); // Obtém o email do localStorage
+
+        document.getElementById('viewPromocoes').addEventListener('click', () => {
+            // Redireciona para a rota com o email
+            window.location.href = `/siteReserva/${email}/promocoes`;
+        });
+    });
+</script>

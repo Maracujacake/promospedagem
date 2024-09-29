@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +10,35 @@
     <div class="container mx-auto mt-12">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Bem-vindo</h1>
 
-        <div class="flex justify-center space-x-4">
-            <!-- Ver todas as promoções do siteReserva -->
-            <a href="/siteReserva/promocoes" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                Ver todas as promoções
-            </a>
+        <div class="flex justify-center">
+            <div class="bg-white shadow-md rounded-lg p-6 w-1/2"> <!-- Caixa elegante -->
+                <div class="flex flex-col space-y-4"> <!-- Manter opções em coluna -->
+                    <!-- Ver todas as promoções do siteReserva -->
+                    <a id="viewPromocoes" class="bg-blue-500 text-white px-4 py-3 rounded-md hover:bg-blue-600 text-center">
+                        Ver todas as promoções
+                    </a>
 
-            <!-- Alterar informações do siteReserva -->
-            <a href="/siteReserva/update" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">
-                Alterar informações
-            </a>
+                    <!-- Alterar informações do siteReserva -->
+                    <a href="/siteReserva/update" class="bg-yellow-500 text-white px-4 py-3 rounded-md hover:bg-yellow-600 text-center">
+                        Alterar informações
+                    </a>
 
-            <button id="logoutBtn" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-black"> Realizar Logout</button>
+                    <button id="logoutBtn" class="bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-black text-center">
+                        Realizar Logout
+                    </button>
 
-            <a href="/" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">
-                Voltar para a página inicial
-            </a>
+                    <a href="/" class="bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-yellow-600 text-center">
+                        Voltar para a página inicial
+                    </a>
 
-            <!-- Deletar o siteReserva -->
-            <form action="/siteReserva/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar seu site de reserva?');">
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-                    Deletar siteReserva
-                </button>
-            </form>
+                    <!-- Deletar o siteReserva -->
+                    <form action="/siteReserva/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar seu site de reserva?');" class="w-full">
+                        <button type="submit" class="bg-red-500 text-white w-full py-3 rounded-md hover:bg-red-600 text-center">
+                            Deletar siteReserva
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -46,6 +52,13 @@
                 window.location.href = '/siteReserva/login'; // Redireciona para a página de login
                 return;
             }
+
+            const email = localStorage.getItem('email'); // Obtém o email do localStorage
+
+            document.getElementById('viewPromocoes').addEventListener('click', () => {
+                // Redireciona para a rota com o email
+                window.location.href = `/siteReserva/${email}/promocoes`;
+            });
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {

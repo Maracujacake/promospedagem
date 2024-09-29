@@ -1,4 +1,5 @@
 const siteReserva = require('../Models/SiteReserva');
+const Promocao = require('../Models/Promocao');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -95,6 +96,7 @@ const atualizarSiteReserva = async (req, res) => {
     }
 }
 
+// busca de todos os sites de reserva
 const getSitesReservas = async (req, res) => {
     try{
         const sites = await siteReserva.findAll();
@@ -104,6 +106,7 @@ const getSitesReservas = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao buscar sites de reserva' });
     }
 }
+
 
 // Função para renderizar o formulário de promoção
 const renderizarFormularioPromocao = async (req, res) => {
@@ -120,10 +123,44 @@ const renderizarFormularioPromocao = async (req, res) => {
     }
 };
 
+
+// Busca todas as promoções de um site de reserva
+const getPromocoesBySiteReserva = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Busca o site de reserva pelo email
+        const SiteReserva = await siteReserva.findOne({ where: { email } });
+
+        if (!SiteReserva) {
+            return res.status(404).json({ message: 'Site de reserva não encontrado.' });
+        }
+
+        // Busca todas as promoções relacionadas ao site de reserva
+        const promocoes = await Promocao.findAll({
+            where: {
+                siteReservaEmail: email
+            }
+        });
+
+        if (!promocoes) {
+            return res.status(404).json({ message: 'Nenhuma promoção encontrada.' });
+        }
+
+        // Retorna as promoções encontradas
+        return res.status(200).render('siteReserva/promocoesSiteReserva', { promocoes });
+    } catch (error) {
+        console.error('Erro ao buscar promoções:', error);
+        return res.status(500).json({ message: 'Erro ao buscar promoções.' });
+    }
+};
+
+
 module.exports = {
     registroSiteReserva,
     loginSiteReserva,
     atualizarSiteReserva,
     getSitesReservas,
-    renderizarFormularioPromocao
+    renderizarFormularioPromocao,
+    getPromocoesBySiteReserva
 }

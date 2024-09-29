@@ -54,4 +54,8 @@ router.get('/opcoes', (req, res) => {
 });
 
 
+// leitura de todas as promoções de um site de reserva
+router.get('/:email/promocoes', siteReservaController.getPromocoesBySiteReserva);
+
+
 module.exports = router;
