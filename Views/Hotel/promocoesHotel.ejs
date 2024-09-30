@@ -24,7 +24,7 @@
                 <% }) %>
             <% } %>
         </div>
-        <a href="/siteReserva/opcoes" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voltar</a>
+        <a href="/Hotel/opcoes" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voltar</a>
     </div>
 </body>
 </html>
@@ -34,10 +34,17 @@
         const token = localStorage.getItem('token');
         console.log(token);
 
-        if (!token || localStorage.getItem('userType') !== 'siteReserva') {
+        if (!token || localStorage.getItem('userType') !== 'hotel') {
             alert('Você não está autenticado. Redirecionando para a página de login.');
-            window.location.href = '/siteReserva/login'; // Redireciona para a página de login
+            window.location.href = '/Hotel/login'; // Redireciona para a página de login
             return;
         }
+
+        const email = localStorage.getItem('email'); // Obtém o email do localStorage
+
+        document.getElementById('viewPromocoes').addEventListener('click', () => {
+            // Redireciona para a rota com o email
+            window.location.href = `/Hotel/${email}/promocoes`;
+        });
     });
 </script>

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize'); 
 const hotel = require('../Models/Hotel');
+const promocao = require('../Models/Promocao');
 const promocaoController = require('./PromocaoController');
 
 // Registro de Hotel
@@ -175,13 +176,43 @@ const criarPromocao = async(req, res) => {
     try{
         const decoded = jwt.verify(token, 'secret');
         const cnpj = decoded.cnpj;
-        const promocao = await promocaoController.criarPromocao(req, res, cnpj);
-        res.json(promocao);
+        await promocaoController.criarPromocao(req, res, cnpj);
     }
     catch(err){
         return res.status(500).json({message: 'Erro ao criar promocao', err});
     }
 }
+
+
+const getPromocoesByHotel = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Busca o site de reserva pelo email
+        const Hotel = await hotel.findOne({ where: { email } });
+
+        if (!Hotel) {
+            return res.status(404).json({ message: 'Site de reserva não encontrado.' });
+        }
+
+        // Busca todas as promoções relacionadas ao site de reserva
+        const promocoes = await promocao.findAll({
+            where: {
+                hotelCnpj: Hotel.cnpj
+            }
+        });
+
+        if (!promocoes) {
+            return res.status(404).json({ message: 'Nenhuma promoção encontrada.' });
+        }
+
+        // Retorna as promoções encontradas
+        return res.status(200).render('Hotel/promocoesHotel', { promocoes });
+    } catch (error) {
+        console.error('Erro ao buscar promoções:', error);
+        return res.status(500).json({ message: 'Erro ao buscar promoções.' });
+    }
+};
 
 module.exports = {
     registroHotel,
@@ -190,5 +221,6 @@ module.exports = {
     getHotelByEmail,
     criarPromocao,
     getHoteis,
-    getHoteisByCidade
+    getHoteisByCidade,
+    getPromocoesByHotel
 };

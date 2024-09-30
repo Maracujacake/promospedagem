@@ -92,12 +92,13 @@
 
                 const result = await response.json();
 
-                if (response.ok) {
+                if (!response.ok) {
+                    alert(result.message);
+                    window.location.href = '/'; // Redireciona para a página de login do hotel
+                } 
+                else {
+                    // Exibe um alerta para sucesso
                     alert('Promoção criada com sucesso!');
-                    console.log(result);
-                } else {
-                    alert('Erro ao criar promoção: ' + result.message);
-                    console.log(result);
                 }
             } catch (err) {
                 console.error('Erro ao enviar formulário', err);

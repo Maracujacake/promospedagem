@@ -57,5 +57,7 @@ router.get('/buscar-cidade', (req, res) => {
 });
 router.get('/hoteis/cidade/:cidade', hotelController.getHoteisByCidade);  // Listagem de hotéis por cidade
 
+// leitura de todas as promoções de um site de reserva
+router.get('/:email/promocoes', hotelController.getPromocoesByHotel);
 
 module.exports = router;
