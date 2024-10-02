@@ -1,0 +1,111 @@
+{
+    "admin_access": "Admin? Click here",
+    "hotel_lista": "Hotel List",
+    "hotel_byCidade": "Search Hotel by City",
+    "texto_padrão1": "Take advantage of our promotions and discover new accommodation opportunities!",
+    "texto_padrão2": "Our system connects hotels and booking sites to provide the best offers and amenities to your customers.",
+    "hotel_access": "I am a hotel, I want to access the system!",
+    "hotel_texto": "Manage your promotions, keep your hotel visible to thousands of users, and make the most of our platform.",
+    "siteReserva_access": "I am a booking site, I want to access the system!",
+    "siteReserva_texto": "Connect with various hotels, offer exclusive promotions, and expand your booking opportunities.",
+    "texto_padrão3": "Our system was developed to facilitate communication between hotels and booking sites, bringing more efficiency and better offers to the accommodation market.",
+
+    "paginaInicial": "Back to the home page",
+    "paginaOpcoes": "Back to the options page",
+
+    "loginSiteReserva": {
+        "titulo": "Booking Site Login",
+        "senha": "Password:",
+        "texto_semConta": "Don't have an account?",
+        "registre-se": "Sign up here"
+    },
+
+    "registroSiteReserva": {
+        "titulo": "Booking Site Registration",
+        "senha": "Password:",
+        "nomeSite": "Site Name:",
+        "telefone": "Phone:",
+        "url": "Site URL:",
+        "registrar": "Register",
+        "texto_jaTemConta": "Already have an account?",
+        "login": "Log in here"
+    },
+
+    "updateSiteReserva": {
+        "titulo": "Booking Site Update",
+        "senha": "Password:",
+        "nomeSite": "Site Name:",
+        "telefone": "Phone:",
+        "url": "Site URL:",
+        "update": "Update"
+    },
+
+    "opcoesSiteReserva": {
+        "titulo": "Welcome to your Site options",
+        "promocoes": "View all promotions",
+        "alterarInfo": "Change information",
+        "logout": "Log out",
+        "deletar": "Delete Site"
+    },
+
+    "promocoesSiteReserva": {
+        "titulo": "Booking Site Promotions",
+        "nenhumaPromo": "No promotion found.",
+        "preco": "Price:",
+        "dataInicio": "Start Date:",
+        "dataFim": "End Date:",
+        "voltar": "Back"
+    },
+
+    "loginHotel": {
+        "titulo": "Hotel Login",
+        "senha": "Password:",
+        "texto_semConta": "Don't have an account?",
+        "registre-se": "Sign up here"
+    },
+
+    "registroHotel": {
+        "titulo": "Hotel Registration",
+        "senha": "Password:",
+        "nomeHotel": "Hotel Name:",
+        "cidade": "City:",
+        "registrar": "Register",
+        "texto_jaTemConta": "Already have an account?",
+        "login": "Log in here"
+    },
+
+    "updateHotel": {
+        "titulo": "Hotel Update",
+        "senha": "Password:",
+        "nomeHotel": "Name:",
+        "cidade": "City:",
+        "update": "Update"
+    },
+
+    "opcoesHotel": {
+        "titulo": "Welcome to your Hotel options",
+        "promocoes": "View all promotions",
+        "criarPromo": "Create new promotion",
+        "alterarInfo": "Change information",
+        "logout": "Log out",
+        "deletar": "Delete Hotel"
+    },
+
+    "promocoesHotel": {
+        "titulo": "Hotel Promotions",
+        "nenhumaPromo": "No promotion found.",
+        "preco": "Price:",
+        "dataInicio": "Start Date:",
+        "dataFim": "End Date:",
+        "voltar": "Back"
+    },
+
+    "criarPromocao": {
+        "titulo": "Create Promotion",
+        "preco": "Price:",
+        "dataInicio": "Start Date:",
+        "dataFim": "End Date:",
+        "siteReserva": "Booking Site:",
+        "criar": "Create Promotion"
+    }
+}

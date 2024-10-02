@@ -74,30 +74,30 @@
 
     <div class="content">
         <div class="form-container">
-            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Registro de Site de Reserva</h1>
+            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800"><%= t('registroSiteReserva.titulo') %></h1>
             <form action="/siteReserva/register" method="POST">
                 <label for="email" class="block text-lg mb-2 text-gray-800">Email:</label>
                 <input type="email" id="email" name="email" class="form-input" required>
 
-                <label for="senha" class="block text-lg mb-2 text-gray-800">Senha:</label>
+                <label for="senha" class="block text-lg mb-2 text-gray-800"><%= t('registroSiteReserva.senha') %></label>
                 <input type="password" id="senha" name="senha" class="form-input" required>
 
-                <label for="nomeSite" class="block text-lg mb-2 text-gray-800">Nome do Site:</label>
+                <label for="nomeSite" class="block text-lg mb-2 text-gray-800"><%= t('registroSiteReserva.nomeSite') %></label>
                 <input type="text" id="nomeSite" name="nomeSite" class="form-input" required>
 
-                <label for="telefone" class="block text-lg mb-2 text-gray-800">Telefone:</label>
+                <label for="telefone" class="block text-lg mb-2 text-gray-800"><%= t('registroSiteReserva.telefone') %></label>
                 <input type="text" id="telefone" name="telefone" class="form-input" required>
 
-                <label for="urlSite" class="block text-lg mb-2 text-gray-800">URL do Site:</label>
+                <label for="urlSite" class="block text-lg mb-2 text-gray-800"><%= t('registroSiteReserva.url') %></label>
                 <input type="text" id="urlSite" name="urlSite" class="form-input" required>
 
-                <button type="submit" class="submit-btn mt-4">Registrar</button>
+                <button type="submit" class="submit-btn mt-4"><%= t('registroSiteReserva.registrar') %></button>
             </form>
             <p class="text-center mt-4 text-gray-800">
-                Já tem uma conta? <a href="/siteReserva/login" class="login-link">Faça login aqui</a>
+                <%= t('registroSiteReserva.texto_jaTemConta') %> <a href="/siteReserva/login" class="login-link"><%= t('registroSiteReserva.login') %></a>
             </p>
             <p class="text-center mt-4 text-gray-800">
-                <a href="/" class="login-link">Voltar para a página inicial</a>
+                <a href="/" class="login-link"><%= t('paginaInicial') %></a>
             </p>
         </div>
     </div>

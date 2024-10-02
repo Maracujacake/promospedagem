@@ -89,24 +89,24 @@
 
     <div class="content">
         <div class="form-container">
-            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Update de Site de Reserva</h1>
+            <h1 class="text-3xl font-bold text-center mb-6 text-gray-800"><%= t('updateSiteReserva.titulo') %></h1>
             <form id="registroForm">
-                <label for="senha" class="block text-lg mb-2 text-gray-800">Senha:</label>
+                <label for="senha" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.senha') %></label>
                 <input type="password" id="senha" name="senha" class="form-input" required>
 
-                <label for="nomeSite" class="block text-lg mb-2 text-gray-800">Nome do Site:</label>
+                <label for="nomeSite" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.nomeSite') %></label>
                 <input type="text" id="nomeSite" name="nomeSite" class="form-input" required>
 
-                <label for="telefone" class="block text-lg mb-2 text-gray-800">Telefone:</label>
+                <label for="telefone" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.telefone') %></label>
                 <input type="text" id="telefone" name="telefone" class="form-input" required>
 
-                <label for="urlSite" class="block text-lg mb-2 text-gray-800">URL do Site:</label>
+                <label for="urlSite" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.url') %></label>
                 <input type="text" id="urlSite" name="urlSite" class="form-input" required>
 
-                <button type="submit" class="submit-btn mt-4">Atualizar</button>
+                <button type="submit" class="submit-btn mt-4"><%= t('updateSiteReserva.update') %></button>
             </form>
             <p class="mt-4 text-center">
-                <a href="opcoes" class="text-gray-500">Voltar para a página de opções</a>
+                <a href="opcoes" class="text-gray-500"><%= t('paginaOpcoes') %></a>
             </p>
         </div>
         

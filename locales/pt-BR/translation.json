@@ -1,0 +1,112 @@
+{
+    "admin_access": "Admin? Clique aqui",
+    "hotel_lista":"Lista de Hotéis",
+    "hotel_byCidade":"Buscar Hotel por Cidade",
+    "texto_padrão1": "Aproveite nossas promoções e descubra novas oportunidades de hospedagem!",
+    "texto_padrão2":"Nosso sistema conecta hotéis e sites de reservas para proporcionar as melhores ofertas e comodidades aos seus clientes.",
+    "hotel_access":"Sou um hotel, quero acessar o sistema!",
+    "hotel_texto":"Gerencie suas promoções, mantenha seu hotel visível para milhares de usuários e aproveite ao máximo nossa plataforma.",
+    "siteReserva_access":"Sou um site de reserva, quero acessar o sistema!",
+    "siteReserva_texto":"Conecte-se com diversos hotéis, ofereça promoções exclusivas e expanda suas oportunidades de reserva.",
+    "texto_padrão3":"Nosso sistema foi desenvolvido para facilitar a comunicação entre hotéis e sites de reservas, trazendo mais eficiência e melhores ofertas para o mercado de hospedagem.",
+
+    "paginaInicial":"Voltar para a página inicial",
+    "paginaOpcoes":"Voltar para a página de opções",
+
+    "loginSiteReserva":{
+        "titulo":"Login de Site de Reserva",
+        "senha":"Senha:",
+        "texto_semConta":"Ainda não tem conta?",
+        "registre-se":"Registre-se aqui"
+    },
+
+    "registroSiteReserva":{
+        "titulo":"Registro de Site de Reserva",
+        "senha":"Senha:",
+        "nomeSite":"Nome do Site:",
+        "telefone":"Telefone:",
+        "url":"URL do Site:",
+        "registrar":"Registrar",
+        "texto_jaTemConta":"Já tem uma conta?",
+        "login":"Faça login aqui"
+    },
+
+    "updateSiteReserva":{
+        "titulo":"Atualização de Site de Reserva",
+        "senha":"Senha:",
+        "nomeSite":"Nome do Site:",
+        "telefone":"Telefone:",
+        "url":"URL do Site:",
+        "update":"Atualizar"
+    },
+
+    "opcoesSiteReserva":{
+        "titulo":"Bem-vindo(a) às opções do seu Site",
+        "promocoes":"Ver todas as promoções",
+        "alterarInfo":"Alterar informações",
+        "logout":"Realizar logout",
+        "deletar":"Deletar Site"
+    },
+
+    "promocoesSiteReserva":{
+        "titulo": "Promoções do Site de Reserva",
+        "nenhumaPromo":"Nenhuma promoção encontrada.",
+        "preco": "Preço:",
+        "dataInicio": "Data de Início:",
+        "dataFim": "Data de Fim:",
+        "voltar": "Voltar"
+    },
+
+
+    "loginHotel":{
+        "titulo":"Login - Hotel",
+        "senha":"Senha:",
+        "texto_semConta":"Não tem uma conta?",
+        "registre-se":"Registre-se aqui"
+    },
+
+    "registroHotel":{
+        "titulo":"Registro de Hotel",
+        "senha":"Senha:",
+        "nomeHotel":"Nome do Hotel:",
+        "cidade":"Cidade:",
+        "registrar":"Registrar",
+        "texto_jaTemConta":"Já tem uma conta?",
+        "login":"Faça login aqui"
+    },
+
+    "updateHotel":{
+        "titulo":"Atualização de Hotel",
+        "senha":"Senha:",
+        "nomeHotel":"Nome:",
+        "cidade":"Cidade:",
+        "update":"Atualizar"
+    },
+
+    "opcoesHotel":{
+        "titulo":"Bem-vindo(a) às opções do seu Hotel",
+        "promocoes":"Ver todas as promoções",
+        "criarPromo":"Criar nova promoção",
+        "alterarInfo":"Alterar informações",
+        "logout":"Realizar logout",
+        "deletar":"Deletar Hotel"
+    },
+
+    "promocoesHotel":{
+        "titulo": "Promoções do Hotel",
+        "nenhumaPromo":"Nenhuma promoção encontrada.",
+        "preco": "Preço:",
+        "dataInicio": "Data de Início:",
+        "dataFim": "Data de Fim:",
+        "voltar": "Voltar"
+    },
+
+    "criarPromocao":{
+        "titulo":"Criar Promoção",
+        "preco":"Preço:",
+        "dataInicio":"Data de Início:",
+        "dataFim":"Data de Fim:",
+        "siteReserva":"Site de Reserva:",
+        "criar":"Criar Promoção"
+    }
+}

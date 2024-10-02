@@ -16,7 +16,10 @@ router.post('/register', async(req, res) => {
 
 // LOGIN
 router.get('/login', (req, res) => {
-    res.render('Hotel/loginHotel', {title: 'Login de Hotel'});
+    res.render('Hotel/loginHotel', {
+        title: 'Login de Hotel',
+        t: req.t
+    });
 });
 
 router.post('/login', async (req, res) => {

@@ -25,7 +25,10 @@ router.post('/register', async (req, res) => {
 
 // login de sites de reserva
 router.get('/login', (req, res) => {
-    res.render('siteReserva/loginSiteReserva', {title: 'Login de site de Reserva'});
+    res.render('siteReserva/loginSiteReserva', {
+        title: 'Login de site de Reserva',
+        t: req.t
+    });
 });
 
 router.post('/login', async(req,res) => {

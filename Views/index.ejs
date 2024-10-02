@@ -54,45 +54,45 @@
         <nav class="navbar shadow-md p-4 relative z-10">
             <div class="container mx-auto flex justify-between items-center">
                 <div class="flex space-x-4">
-                    <a href="hotel/hoteis" class="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-4 py-2 rounded-lg transition duration-300">Lista de Hotéis</a>
-                    <a href="hotel/buscar-cidade" class="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-4 py-2 rounded-lg transition duration-300">Buscar Hotel por Cidade</a>
+                    <a href="hotel/hoteis" class="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-4 py-2 rounded-lg transition duration-300"><%= t('hotel_lista') %></a>
+                    <a href="hotel/buscar-cidade" class="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-4 py-2 rounded-lg transition duration-300"><%= t('hotel_byCidade') %></a>
                 </div>
-                <a href="/admin-login" class="text-white hover:underline">Admin? Entre aqui</a>
+                <a href="/admin-login" class="text-white hover:underline"><%= t('admin_access') %></a>
             </div>
         </nav>
 
         <div class="container mx-auto p-6 content">
             <h1 class="text-5xl font-bold mb-6 text-center text-white"><%= message %></h1>
             <p class="text-2xl text-center mb-8 text-white">
-                Aproveite nossas promoções e descubra novas oportunidades de hospedagem!
+                <%= t('texto_padrão1') %>
             </p>
             <p class="text-xl text-center mb-8 text-white">
-                Nosso sistema conecta hotéis e sites de reservas para proporcionar as melhores ofertas e comodidades aos seus clientes.
+                <%= t('texto_padrão2') %>
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
                 <div class="flex flex-col items-center">
                     <a href="/hotel/login" class="hotel-login text-white px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 text-center">
-                        Sou um hotel, quero acessar o sistema!
+                        <%= t('hotel_access') %>
                     </a>
                     <p class="mt-4 text-white text-lg text-center">
-                        Gerencie suas promoções, mantenha seu hotel visível para milhares de usuários e aproveite ao máximo nossa plataforma.
+                        <%= t('hotel_texto') %>
                     </p>
                 </div>
 
                 <div class="flex flex-col items-center">
                     <a href="/siteReserva/login" class="site-login text-white px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 text-center">
-                        Sou um site de reserva, quero acessar o sistema!
+                        <%= t('siteReserva_access') %>
                     </a>
                     <p class="mt-4 text-white text-lg text-center">
-                        Conecte-se com diversos hotéis, ofereça promoções exclusivas e expanda suas oportunidades de reserva.
+                        <%= t('siteReserva_texto') %>
                     </p>
                 </div>
             </div>
             
             <div class="mt-12 text-center text-white">
                 <p class="text-xl">
-                    Nosso sistema foi desenvolvido para facilitar a comunicação entre hotéis e sites de reservas, trazendo mais eficiência e melhores ofertas para o mercado de hospedagem.
+                    <%= t('texto_padrão3') %>
                 </p>
             </div>
         </div>

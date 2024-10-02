@@ -4,27 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promoções do Site de Reserva</title>
+    <title><%= t('promocoesHotel.titulo') %></title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto mt-12">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Promoções do Site de Reserva</h1>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6"><%= t('promocoesHotel.titulo') %></h1>
+        
         <div class="flex flex-col space-y-4">
             <% if (promocoes.length === 0) { %>
-                <p class="text-center text-red-500">Nenhuma promoção encontrada.</p>
+                <p class="text-center text-red-500"><%= t('promocoesHotel.nenhumaPromo') %></p>
             <% } else { %>
                 <% promocoes.forEach(promo => { %>
                     <div class="bg-white shadow-md rounded-lg p-4">
                         <h2 class="text-xl font-semibold">Promoção ID: <%= promo.id_promocao %></h2>
-                        <p><strong>Preço:</strong> R$ <%= promo.preco.toFixed(2) %></p>
-                        <p><strong>Data de Início:</strong> <%= new Date(promo.data_inicio).toLocaleDateString('pt-BR') %></p>
-                        <p><strong>Data de Fim:</strong> <%= new Date(promo.data_fim).toLocaleDateString('pt-BR') %></p>
+                        <p><strong><%= t('promocoesHotel.preco') %></strong> R$ <%= promo.preco.toFixed(2) %></p>
+                        <p><strong><%= t('promocoesHotel.dataInicio') %></strong> <%= new Date(promo.data_inicio).toLocaleDateString('pt-BR') %></p>
+                        <p><strong><%= t('promocoesHotel.dataFim') %>:</strong> <%= new Date(promo.data_fim).toLocaleDateString('pt-BR') %></p>
                     </div>
                 <% }) %>
             <% } %>
         </div>
-        <a href="/Hotel/opcoes" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voltar</a>
+        <a href="/Hotel/opcoes" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><%= t('promocoesHotel.voltar') %></a>
     </div>
 </body>
 </html>
