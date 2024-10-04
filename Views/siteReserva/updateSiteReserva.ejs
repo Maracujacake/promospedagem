@@ -98,7 +98,7 @@
                 <input type="text" id="nomeSite" name="nomeSite" class="form-input" required>
 
                 <label for="telefone" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.telefone') %></label>
-                <input type="text" id="telefone" name="telefone" class="form-input" required>
+                <input type="text" id="telefone" name="telefone" class="form-input" required maxlength="15">
 
                 <label for="urlSite" class="block text-lg mb-2 text-gray-800"><%= t('updateSiteReserva.url') %></label>
                 <input type="text" id="urlSite" name="urlSite" class="form-input" required>
@@ -175,6 +175,20 @@
                 alertElement.classList.remove('active'); // Esconde o alerta após 5 segundos
             }, 5000);
         }
+
+        // Função que formata o campo de telefone
+        function aplicarMascaraTelefone(value) {
+            value = value.replace(/\D/g, ""); // Remove tudo o que não for dígito
+            value = value.replace(/^(\d{2})(\d)/g, "($1) $2"); // Coloca parênteses no DDD
+            value = value.replace(/(\d{5})(\d)/, "$1-$2"); // Coloca o hífen entre o 5º e o 6º dígito
+            return value;
+        }
+
+        // Adiciona o evento input para formatar em tempo real
+        const telefoneInput = document.getElementById('telefone');
+        telefoneInput.addEventListener('input', function (e) {
+            e.target.value = aplicarMascaraTelefone(e.target.value);
+        });
     </script>
 </body>
 </html>

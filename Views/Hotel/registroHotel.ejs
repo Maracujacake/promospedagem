@@ -74,7 +74,7 @@
             <h1 class="text-3xl font-bold text-center mb-6 text-gray-800"><%= t('registroHotel.titulo') %></h1>
             <form action="/hotel/register" method="POST">
                 <label for="email" class="block text-lg mb-2 text-gray-800">Email:</label>
-                <input type="email" id="email" name="email" class="form-input" required>
+                <input type="email" id="email" name="email" class="form-input" required placeholder="test@email.com">
 
                 <label for="senha" class="block text-lg mb-2 text-gray-800"><%= t('registroHotel.senha') %></label>
                 <input type="password" id="senha" name="senha" class="form-input" required>
@@ -83,7 +83,7 @@
                 <input type="text" id="nome" name="nome" class="form-input" required>
 
                 <label for="cnpj" class="block text-lg mb-2 text-gray-800">CNPJ:</label>
-                <input type="text" id="cnpj" name="cnpj" class="form-input" required>
+                <input type="text" id="cnpj" name="cnpj" class="form-input" required placeholder="99.999.999/9999-99" maxlength="18">
 
                 <label for="cidade" class="block text-lg mb-2 text-gray-800"><%= t('registroHotel.cidade') %></label>
                 <input type="text" id="cidade" name="cidade" class="form-input" required>
@@ -98,5 +98,28 @@
             </p>
         </div>
     </div>
+
+    <script>
+        // Função que formata o campo de CNPJ
+        function aplicarMascaraCNPJ(value) {
+            value = value.replace(/\D/g, ""); // Remove tudo o que não for dígito
+            value = value.replace(/^(\d{2})(\d)/, "$1.$2"); // Coloca ponto após os dois primeiros dígitos
+            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3"); // Coloca ponto após os cinco primeiros dígitos
+            value = value.replace(/\.(\d{3})(\d)/, ".$1/$2"); // Coloca a barra após os oito primeiros dígitos
+            value = value.replace(/(\d{4})(\d)/, "$1-$2"); // Coloca o hífen entre o 12º e o 13º dígito
+            return value;
+        }
+
+        // Adiciona o evento input para formatar em tempo real e limita os caracteres
+        const cnpjInput = document.getElementById('cnpj');
+        cnpjInput.addEventListener('input', function (e) {
+            e.target.value = aplicarMascaraCNPJ(e.target.value);
+
+            // Impedir que o valor ultrapasse 18 caracteres (formato final com máscara)
+            if (e.target.value.length > 18) {
+                e.target.value = e.target.value.slice(0, 18);
+            }
+        });
+    </script>
 </body>
 </html>
