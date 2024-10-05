@@ -12,3 +12,5 @@ const Admin = sequelize.define('admin', {
         allowNull: false
     }
 });
+
+module.exports = Admin;

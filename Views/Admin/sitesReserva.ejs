@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sites de Reserva</title>
+</head>
+<body>
+    <h1>Lista de Sites de Reserva</h1>
+    <ul>
+        <!-- Aqui você pode iterar sobre a lista de sites de reserva e exibi-los -->
+        <% sites.forEach(function(site) { %>
+            <li><%= site.nomeSite %> - <%= site.email %></li>
+        <% }); %>
+    </ul>
+</body>
+</html>

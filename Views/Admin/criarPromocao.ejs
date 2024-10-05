@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= t('criarPromocao.titulo') %></title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="bg-white shadow-md rounded-lg p-8 w-1/2">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6"><%= t('criarPromocao.titulo') %></h2>
+        <form id="promocao-form" class="space-y-4">
+            <div>
+                <label for="preco" class="block font-medium text-gray-700"><%= t('criarPromocao.preco') %></label>
+                <input type="text" id="preco" name="preco" placeholder="Informe o preço da promoção" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            </div>
+
+            <div>
+                <label for="data_inicio" class="block font-medium text-gray-700"><%= t('criarPromocao.dataInicio') %></label>
+                <input type="date" id="data_inicio" name="data_inicio" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            </div>
+
+            <div>
+                <label for="data_fim" class="block font-medium text-gray-700"><%= t('criarPromocao.dataFim') %></label>
+                <input type="date" id="data_fim" name="data_fim" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            </div>
+
+            <div>
+                <label for="url_site" class="block font-medium text-gray-700"><%= t('criarPromocao.siteReserva') %></label>
+                <select id="url_site" name="url_site" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                    <option value="">Selecione um site de reserva</option>
+                    <% sitesReserva.forEach(function(site) { %>
+                        <option value="<%= site.dataValues.urlSite %>"><%= site.dataValues.nomeSite %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div>
+                <label for="hotelEmail" class="block font-medium text-gray-700"><%= t('criarPromocao.siteReserva') %></label>
+                <select id="hotelEmail" name="hotelEmail" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                    <option value="">Selecione um Hotel</option>
+                    <% hotels.forEach(function(hotel) { %>
+                        <option value="<%= hotel.dataValues.email %>"><%= hotel.dataValues.nome %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <input type="submit" value="Criar Promoção" class="bg-green-500 text-white w-full py-2 rounded-md hover:bg-green-600 cursor-pointer">
+            <p class="flex justify-center">
+                <a href="/" class="bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-black text-center">
+                    <%= t('paginaInicial') %>
+                </a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            console.log(token);
+
+            if (!token || localStorage.getItem('userType') !== 'admin') {
+                alert('Você não está autenticado. Redirecionando para a página de login.');
+                window.location.href = '/Admin/login'; // Redireciona para a página de login do hotel
+                return;
+            }
+        });
+
+        // Pega o formulário
+        const form = document.getElementById('promocao-form');
+
+        // Captura o envio do formulário
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Evita o envio padrão
+
+            const token = localStorage.getItem('token'); // Pega o token armazenado
+
+            if (!token) {
+                alert('Você precisa estar logado para criar uma promoção!');
+                return;
+            }
+
+            // Pega os dados do formulário
+            const formData = new FormData(form);
+            const data = {
+                email: formData.get('hotelEmail'), // Inclui o hotel selecionado
+                preco: formData.get('preco'),
+                data_inicio: formData.get('data_inicio'),
+                data_fim: formData.get('data_fim'),
+                url_site: formData.get('url_site') // Inclui a URL do site de reserva
+            };
+
+            try {
+                // Faz a requisição com o token no cabeçalho
+                const response = await fetch('/admin/criarPromocao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Adiciona o token no cabeçalho
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    alert(result.message);
+                    window.location.href = '/'; // Redireciona em caso de erro
+                } else {
+                    // Exibe um alerta para sucesso
+                    alert('Promoção criada com sucesso!');
+                }
+            } catch (err) {
+                console.error('Erro ao enviar formulário', err);
+            }
+        });
+    </script>
+</body>
+</html>

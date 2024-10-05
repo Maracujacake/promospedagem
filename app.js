@@ -84,6 +84,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/siteReserva', require('./Routes/SiteReservaRoutes'));
 app.use('/hotel', require('./Routes/HotelRoutes'));
+app.use('/admin', require('./Routes/AdminRoutes'));
 
 require('./Models/Associations');
 sequelize.sync({ force: false }).then(() => {

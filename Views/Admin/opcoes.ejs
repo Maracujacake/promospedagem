@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opções do Administrador</title>
+</head>
+<body>
+    <h1>Bem-vindo</h1>
+    <ul>
+        <li><a href="/admin/criarPromocao">Criar Promoção</a></li>
+        <li><a href="/admin/hotelPorEmail">Buscar Hotel por Email</a></li>
+        <li><a href="/admin/siteReservaPorEmail">Buscar Site de Reserva por Email</a></li>
+        <li><a href="/admin/deletarHotel">Deletar Hotel</a></li>
+        <li><a href="/admin/deletarSiteReserva">Deletar Site de Reserva</a></li>
+        <li><a href="/admin/sitesReserva">Listar Sites de Reserva</a></li>
+    </ul>
+
+    <button id="logoutBtn" class="bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-black text-center">
+        Logout
+    </button>
+
+    <script>
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                // Remover o token do localStorage
+                localStorage.removeItem('token');
+                localStorage.removeItem('userType');
+                
+                console.log('Logout bem-sucedido!');
+                
+                // Redirecionar para a página de login
+                window.location.href = '/admin/login'; // Ajuste o caminho conforme necessário
+        });
+    </script>
+</body>
+</html>
