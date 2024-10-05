@@ -9,15 +9,23 @@ router.get('/login', (req, res) => {
 
 router.post('/login', adminController.loginAdmin);
 
+// CREATE - C
 router.get('/criarPromocao', adminController.renderizarFormularioPromocao);
 
-
 router.post('/criarPromocao', adminController.criarPromocao);
+
+
+
+// READ - R
+
+router.get('/promocoes', adminController.listarPromocoes);
 
 router.get('/opcoes', (req, res) => {
     res.render('Admin/opcoes', { user: req.user });
 });
 
+
+router.get('/hoteis', adminController.listarHoteis);
 
 // Listagem de hotel por email
 router.get('/hotelPorEmail', (req, res) => {
@@ -26,29 +34,35 @@ router.get('/hotelPorEmail', (req, res) => {
 
 router.post('/hotelPorEmail', adminController.listarHotelPorEmail);
 
+
+
 // Listagem de todos os sites de reserva
-router.get('/sitesReserva', adminController.listarHoteis);
+router.get('/sitesReserva', adminController.listarSitesReserva);
+
+
 
 // Listagem de site de reserva por email
 router.get('/siteReservaPorEmail', (req, res) => {
     res.render('Admin/siteReservaPorEmail', { title: 'Buscar Site de Reserva por Email' });
 });
-
 router.post('/siteReservaPorEmail', adminController.listarSiteReservaPorEmail);
 
 
-// deleção de hotel
-router.get('deletarHotel', (req, res) => {
-    res.render('Admin/deletarHotel', { title: 'Deletar Hotel' });
+
+// UPDATE - U
+
+router.get('/hoteis/:email/editar', adminController.editarHotel);
+
+router.post('/hoteis/atualizar', async (req, res) => {
+    console.log('Chegou na rota de atualização', req.body); // Log da requisição
+    await adminController.updateHotel(req, res);
 });
 
-router.delete('/deletarHotel', adminController.deletarHotel);
+// DELETE - D
 
 
-// deleção de siteReserva
-router.get('/deletarSiteReserva', (req, res) => {
-    res.render('Admin/deletarSiteReserva', { title: 'Deletar Site de Reserva' });
-});
+router.post('/hoteis/:email/deletar', adminController.deletarHotel);
+
 
 router.delete('/deletarSiteReserva', adminController.deletarSiteReserva);
 
