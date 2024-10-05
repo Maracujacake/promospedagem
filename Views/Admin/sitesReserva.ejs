@@ -2,15 +2,48 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Sites de Reserva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sites de Reserva Disponíveis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Lista de Sites de Reserva</h1>
-    <ul>
-        <!-- Aqui você pode iterar sobre a lista de sites de reserva e exibi-los -->
-        <% sites.forEach(function(site) { %>
-            <li><%= site.nomeSite %> - <%= site.email %></li>
-        <% }); %>
-    </ul>
+<body class="bg-white text-gray-900">
+
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold text-center text-green-600 mb-8">Sites de Reserva Disponíveis</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% if (sites.length === 0) { %>
+                <p class="text-center col-span-3 text-green-800">Nenhum site de reserva disponível no momento.</p>
+            <% } else { %>
+                <% sites.forEach(function(site) { %>
+                    <div class="bg-white border border-green-300 shadow-md rounded-lg p-6 flex justify-between items-center hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                        <div>
+                            <h2 class="text-2xl font-semibold text-black mb-2"><%= site.nomeSite %></h2>
+                            <p class="text-black">URL: <%= site.urlSite %></p>
+                            <p class="text-black">Email: <%= site.email %></p>
+                            <p class="text-black">Telefone: <%= site.telefone %></p>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <a href="/admin/sitesReserva/<%= site.email %>/editar" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 block text-center">
+                                Alterar informações
+                            </a>
+                            <form action="/admin/sitesReserva/<%= site.email %>/deletar" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar este site?')">
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 w-full">
+                                    Deletar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+    <p class="flex justify-center">
+        <a href="/admin/opcoes" class="bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-black text-center">
+            Voltar para a página de opções
+        </a>
+    </p>
+
 </body>
 </html>

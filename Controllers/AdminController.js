@@ -137,7 +137,7 @@ const listarHotelPorEmail = async (req, res) => {
 const listarSitesReserva = async (req, res) => {
     try {
         const sites = await SiteReserva.findAll();
-        res.json(sites);
+        res.render('admin/sitesReserva', { sites });
     } catch (err) {
         return res.status(500).json({ message: 'Erro ao listar sites de reserva', err });
     }
@@ -263,6 +263,22 @@ const updateHotel = async(req, res) => {
     }
 }
 
+// Renderiza o formulário de edição de um hotel encontrado pelo email
+const editarSiteReserva = async (req, res) => {
+    const { email } = req.params; 
+    try {
+        const site = await SiteReserva.findOne({ where: { email } });
+
+        if (!site) {
+            return res.status(404).json({ message: 'Site não encontrado' });
+        }
+
+        res.render('admin/editarSiteReserva', { site });
+    } catch (err) {
+        return res.status(500).json({ message: 'Erro ao buscar site', err });
+    }
+};
+
 // atualiza siteReserva dado o email
 const atualizarSiteReserva = async (req, res) => {
     console.log(req.user);
@@ -287,7 +303,7 @@ const atualizarSiteReserva = async (req, res) => {
         });
 
         await site.save();
-        res.json({message: 'Site de reserva atualizado com sucesso'});
+        res.redirect('/admin/sitesReserva');
     }
     catch{
         return res.status(500).json({ message: 'Erro ao atualizar site de reserva' });
@@ -318,7 +334,7 @@ const deletarHotel = async (req, res) => {
 
 //deleta um siteReserva dado o email
 const deletarSiteReserva = async (req, res) => {
-    const { email } = req.parms;
+    const { email } = req.params;
 
     try{
         const site = await SiteReserva.findOne({where: {email}});
@@ -345,6 +361,7 @@ module.exports = {
     listarPromocoes,
     atualizarSiteReserva,
     updateHotel,
+    editarSiteReserva,
     deletarHotel,
     deletarSiteReserva,
     editarHotel

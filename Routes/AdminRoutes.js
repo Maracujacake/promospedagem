@@ -58,12 +58,17 @@ router.post('/hoteis/atualizar', async (req, res) => {
     await adminController.updateHotel(req, res);
 });
 
+router.get('/sitesReserva/:email/editar', adminController.editarSiteReserva);
+
+router.post('/sitesReserva/atualizar', async (req, res) => {
+    await adminController.atualizarSiteReserva(req, res);
+});
+
 // DELETE - D
 
 
 router.post('/hoteis/:email/deletar', adminController.deletarHotel);
 
-
-router.delete('/deletarSiteReserva', adminController.deletarSiteReserva);
+router.post('/sitesReserva/:email/deletar', adminController.deletarSiteReserva);
 
 module.exports = router;
