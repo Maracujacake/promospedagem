@@ -214,6 +214,26 @@ const getPromocoesByHotel = async (req, res) => {
     }
 };
 
+const deletarHotel = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Pega o token do cabeçalho
+    if (!token) {
+        return res.status(401).json({ message: 'Token não fornecido' });
+    }
+    try{
+        const decoded = jwt.verify(token, 'secret');
+        const cnpj = decoded.cnpj;
+        const Hotel = await hotel.findOne({where: {cnpj}});
+        if(!Hotel){
+            return res.status(404).json({message: 'Hotel não encontrado'});
+        }
+        await Hotel.destroy();
+        res.json({message: 'Hotel deletado com sucesso'});
+    }
+    catch(err){
+        return res.status(500).json({message: 'Erro ao deletar hotel', err});
+    }
+}
+
 module.exports = {
     registroHotel,
     loginHotel,
@@ -222,5 +242,6 @@ module.exports = {
     criarPromocao,
     getHoteis,
     getHoteisByCidade,
-    getPromocoesByHotel
+    getPromocoesByHotel,
+    deletarHotel
 };

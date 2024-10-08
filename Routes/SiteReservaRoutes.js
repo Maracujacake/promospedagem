@@ -5,6 +5,7 @@ const siteReservaController = require('../Controllers/SiteReservaController');
 const bcrypt = require('bcrypt');
 const siteReserva = require('../Models/SiteReserva');
 const authenticateJWT = require('../Middleware/AuthMiddleware');
+const autenticarSiteReserva = require('../Middleware/siteReservaAuth');
 
 
 // registro de novos sites de reserva
@@ -43,7 +44,7 @@ router.get('/update', (req, res) => {
     res.render('siteReserva/updateSiteReserva', {title: 'atualizar dados de Site de Reserva'});
 });
 
-router.put('/update', authenticateJWT, siteReservaController.atualizarSiteReserva);
+router.put('/update', autenticarSiteReserva, siteReservaController.atualizarSiteReserva);
 
 
 
@@ -62,7 +63,7 @@ router.get('/:email/promocoes', siteReservaController.getPromocoesBySiteReserva)
 
 
 // Deletar site de reserva
-router.delete('/delete', authenticateJWT, siteReservaController.deletarSiteReserva);
+router.delete('/delete', autenticarSiteReserva, siteReservaController.deletarSiteReserva);
 
 
 module.exports = router;

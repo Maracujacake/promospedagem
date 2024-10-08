@@ -3,6 +3,7 @@ const router = express.Router();
 const hotelController = require('../Controllers/HotelController');
 const authenticateJWT = require('../Middleware/AuthMiddleware');
 const siteReservaController = require('../Controllers/SiteReservaController');
+const autenticarHotel = require('../Middleware/hotelAuth');
 
 // CREATE - Registro
 router.get('/register', (req, res) => {
@@ -32,7 +33,7 @@ router.get('/update', (req, res) => {
     res.render('Hotel/updateHotel', {title: 'Atualizar Hotel'});
 });
 
-router.put('/update', authenticateJWT, hotelController.updateHotel);
+router.put('/update', autenticarHotel, hotelController.updateHotel);
 
 
 // GET - Leitura de hoteis
@@ -43,7 +44,7 @@ router.get('/details', async(req, res) => {
 
 // CRIAÇÃO de promoção
 router.get('/criarPromocao', siteReservaController.renderizarFormularioPromocao);
-router.post('/criarPromocao', hotelController.criarPromocao);
+router.post('/criarPromocao', autenticarHotel , hotelController.criarPromocao);
 
 
 
@@ -60,7 +61,11 @@ router.get('/buscar-cidade', (req, res) => {
 });
 router.get('/hoteis/cidade/:cidade', hotelController.getHoteisByCidade);  // Listagem de hotéis por cidade
 
-// leitura de todas as promoções de um site de reserva
+// leitura de todas as promoções de um hotel
 router.get('/:email/promocoes', hotelController.getPromocoesByHotel);
+
+// Deletar hotel
+router.delete('/delete', autenticarHotel, hotelController.deletarHotel);
+
 
 module.exports = router;
