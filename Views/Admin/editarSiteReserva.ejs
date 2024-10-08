@@ -12,7 +12,7 @@
         <h1 class="text-3xl font-bold text-center text-green-600 mb-8">Editar Informações do Site de Reserva</h1>
 
         <div class="max-w-lg mx-auto bg-white border border-green-300 shadow-md rounded-lg p-6">
-            <form action="/admin/sitesReserva/atualizar" method="POST">
+            <form id="editar-site-form">
                 <div class="mb-4">
                     <label for="nomeSite" class="block text-green-700 font-semibold mb-2">Nome do Site</label>
                     <input type="text" id="nomeSite" name="nomeSite" value="<%= site.nomeSite %>" required class="w-full border border-green-300 rounded-lg px-4 py-2">
@@ -50,5 +50,42 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('editar-site-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+
+            const token = localStorage.getItem('token'); // Obtendo o token do localStorage
+
+            // Obtendo os dados do formulário
+            const formData = new FormData(event.target);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+
+            try {
+                const response = await fetch('/admin/sitesReserva/atualizar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formObject)
+                });
+
+                if (response.ok) {
+                    // Lógica de sucesso, como redirecionar o usuário ou exibir uma mensagem
+                    alert('Site de reserva atualizado com sucesso!');
+                } else {
+                    // Lógica de erro, se a resposta não for OK
+                    const errorData = await response.json();
+                    alert(`Erro: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error('Erro ao enviar os dados:', error);
+                alert('Ocorreu um erro ao tentar atualizar o site de reserva.');
+            }
+        });
+    </script>
 </body>
 </html>

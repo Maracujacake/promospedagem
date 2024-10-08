@@ -43,16 +43,28 @@
     </div>
 
     <script>
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                // Remover o token do localStorage
-                localStorage.removeItem('token');
-                localStorage.removeItem('userType');
-                
-                console.log('Logout bem-sucedido!');
-                
-                // Redirecionar para a página de login
-                window.location.href = '/admin/login'; // Ajuste o caminho conforme necessário
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            console.log(token);
+
+            if(!token && localStorage.getItem('userType') !== 'admin') {
+                console.log('Usuário não autenticado');
+                window.location.href = '/admin/login';
+            }
         });
+
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            // Remover o token do localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('userType');
+                
+            console.log('Logout bem-sucedido!');
+                
+            // Redirecionar para a página de login
+            window.location.href = '/admin/login'; // Ajuste o caminho conforme necessário
+        });
+
     </script>
 </body>
 </html>

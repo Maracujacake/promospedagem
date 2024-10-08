@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../Controllers/AdminController');
 const authenticateJWT = require('../Middleware/AuthMiddleware');
+const autenticarAdmin = require('../Middleware/adminAuth');
 
 router.get('/login', (req, res) => {
     res.render('Admin/login', { title: 'Login de Administrador' });
@@ -12,7 +13,7 @@ router.post('/login', adminController.loginAdmin);
 // CREATE - C
 router.get('/criarPromocao', adminController.renderizarFormularioPromocao);
 
-router.post('/criarPromocao', adminController.criarPromocao);
+router.post('/criarPromocao', autenticarAdmin, adminController.criarPromocao);
 
 
 
@@ -53,22 +54,22 @@ router.post('/siteReservaPorEmail', adminController.listarSiteReservaPorEmail);
 
 router.get('/hoteis/:email/editar', adminController.editarHotel);
 
-router.post('/hoteis/atualizar', async (req, res) => {
+router.post('/hoteis/atualizar', autenticarAdmin , async (req, res) => {
     console.log('Chegou na rota de atualização', req.body); // Log da requisição
     await adminController.updateHotel(req, res);
 });
 
 router.get('/sitesReserva/:email/editar', adminController.editarSiteReserva);
 
-router.post('/sitesReserva/atualizar', async (req, res) => {
+router.post('/sitesReserva/atualizar', autenticarAdmin, async (req, res) => {
     await adminController.atualizarSiteReserva(req, res);
 });
 
 // DELETE - D
 
 
-router.post('/hoteis/:email/deletar', adminController.deletarHotel);
+router.post('/hoteis/:email/deletar', autenticarAdmin, adminController.deletarHotel);
 
-router.post('/sitesReserva/:email/deletar', adminController.deletarSiteReserva);
+router.post('/sitesReserva/:email/deletar', autenticarAdmin, adminController.deletarSiteReserva);
 
 module.exports = router;
